@@ -1,12 +1,14 @@
 import React from "react";
 import useFormValidation from "./useFormValidation";
 import validateLogin from "./validateLogin";
+import firebase from '../../firebase'
 
 const INITIAL_STATE = {
   name: "",
   email: "",
   password: "",
 };
+
 
 function Login(props) {
   const {
@@ -16,8 +18,20 @@ function Login(props) {
     values,
     errors,
     isSubmitting,
-  } = useFormValidation(INITIAL_STATE, validateLogin);
+  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
   const [login, setLogin] = React.useState(true);
+
+  // authenticateUser IS going to call either the logging method or the register method of out firebase instance 
+      // to determine which to call we're going to take the value of log in  and we'll use a ternayoperator 
+
+  async function authenticateUser() { 
+    
+    const { name, email, password } = values
+    const response = login 
+        ? await firebase.login(email, password)
+        : await firebase.register(name, email, password);
+      console.log({response});
+  }
 
   return (
     <div>
@@ -32,7 +46,7 @@ function Login(props) {
             placeholder="Your name"
             autoComplete="off"
           />
-        )}
+        )}        
         <input
           onChange={handleChange}
           onBlur={handleBlur}
