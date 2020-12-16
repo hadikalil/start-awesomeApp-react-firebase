@@ -20,18 +20,40 @@ function Login(props) {
     isSubmitting,
   } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
   const [login, setLogin] = React.useState(true);
+// to display the error masseges we need a  state 
+  const [firebaseError, setFirebaseError] = React.useState(null) 
 
   // authenticateUser IS going to call either the logging method or the register method of out firebase instance 
       // to determine which to call we're going to take the value of log in  and we'll use a ternayoperator 
 
+
+
+
+
   async function authenticateUser() { 
     
     const { name, email, password } = values
-    const response = login 
-        ? await firebase.login(email, password)
-        : await firebase.register(name, email, password);
-      console.log({response});
+    try {
+      login
+      ? await firebase.login(email, password)
+      : await firebase.register(name, email, password);
+    } catch (err) {
+      console.error('Authentication Error ',err);
+      setFirebaseError(err.message)     
+    }
   }
+// before the use of try and catch/ before error handling :*
+//**********************************
+// async function authenticateUser() { 
+    //   const { name, email, password } = values
+//   const response = login 
+//       ? await firebase.login(email, password)
+//       : await firebase.register(name, email, password);
+//     console.log({response});
+// }
+//*************************************
+
+
 
   return (
     <div>
@@ -68,6 +90,7 @@ function Login(props) {
           placeholder="Choose a secure password"
         />
         {errors.password && <p className="error-text">{errors.password}</p>}
+        {firebaseError && <p className="error-text">{firebaseError}</p>}
         <div className="flex mt3">
           <button type="submit" className="button pointer mr2" disabled={isSubmitting} style={{background: isSubmitting ? "grey" : "orange"}} >
             Submit
