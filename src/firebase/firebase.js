@@ -28,6 +28,11 @@ class Firebase {
 
     async logout() {
         await firebase.auth().signOut()
+            // we will consome this from the context @ header in the on click function 
+    }
+
+    async resetPassword(email) {
+        await firebase.auth().sendPasswordResetEmail(email)
     }
 }
 
