@@ -29,4 +29,4 @@ function useAuth() {
 export default useAuth;
 
 
-// to see how it works go to LinkList.js
+// to see how it works go to App.js
