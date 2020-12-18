@@ -1,8 +1,10 @@
 //import he firebase things
 import app from "firebase/app"
 import "firebase/auth";
+import "firebase/firestore" // give the ability to work with the fire store database
 //import the config from the other file 
 import firebaseConfig from './config'
+
 
 
 // register\login
@@ -10,6 +12,7 @@ class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);
         this.auth = app.auth;
+        this.db = app.firestore
     }
 
     async register(name, email, password) {
