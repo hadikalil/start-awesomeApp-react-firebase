@@ -1,7 +1,7 @@
 // Login state --> useFormValidation ------> give         validate(values)--> login state to validateLogin with values to work on 
 
 export default function validateLogin(values) {
-    let errors = {}
+    let errors = {} // this is an errors object that will save into it errors.email & errors.Password
         // values looks like :- {name: "", email: "deeeee", password: "d"}
 
     // Email Errors 
