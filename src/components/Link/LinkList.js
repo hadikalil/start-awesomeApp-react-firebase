@@ -47,5 +47,3 @@ function LinkList(props) {
 }
 
 export default LinkList;
-
-
