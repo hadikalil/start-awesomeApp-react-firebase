@@ -29,23 +29,22 @@ function LinkItem({ link, index, showCount, history }) {
       });
     }
   }
-  
+
   function handleDeleteLink() {
     const linkRef = firebase.db().collection("links").doc(link.id); // creating a reference
-    // after we confirmed that the user that's currently logged in is the user that posted -->   {postedByAuthUser && (.... 
-    linkRef.delete().then(() =>  {
-      console.log(`Document with ID ${link.id} deleted`);
-    }).catch( err => {
-      console.error("Error deleting document:", err)
-    })
-
-
+    // after we confirmed that the user that's currently logged in is the user that posted -->   {postedByAuthUser && (....
+    linkRef
+      .delete()
+      .then(() => {
+        console.log(`Document with ID ${link.id} deleted`);
+      })
+      .catch((err) => {
+        console.error("Error deleting document:", err);
+      });
   }
 
-
-  //  first to delete first we need to check if the user is the one whom created the link 
-  const postedByAuthUser = user && user.uid === link.postedBy.id // ture /flase 
-
+  //  first to delete first we need to check if the user is the one whom created the link
+  const postedByAuthUser = user && user.uid === link.postedBy.id; // ture /flase
 
   return (
     <div className="flex items-start mt2">
@@ -57,7 +56,9 @@ function LinkItem({ link, index, showCount, history }) {
       </div>
       <div className="ml1">
         <div>
-          {link.description}{" "}
+          <a href={link.url} className="black no-underline">
+            {link.description}
+          </a>{" "}
           <span className="link">({getDomain(link.url)})</span>
         </div>
         <div className="f6 lh-copy gray">
